@@ -19,10 +19,11 @@ export default function FacilityPage() {
     const [createFacilityModalOpen, setCreateFacilityModalOpen] = useState<boolean>(false);
     const [editFacilityModalOpen, setEditFacilityModalOpen] = useState<boolean>(false);
     const [messageModalOpen, setMessageModalOpen] = useState<boolean>(false);
+    const [alertModalOpen, setAlertModalOpen] = useState<boolean>(false);
     const [fetchingFacilities, setFetchingFacilities] = useState<boolean>(true);
     const [facilities, setFacilities] = useState<FacilityModel[]>([]);
-    const [messageModalTitle, setMessageModalTitle] = useState<string>('');
-    const [messageModalDescription, setMessageModalDescription] = useState<string>('');
+    const [alertModalTitle, setAlertModalTitle] = useState<string>('');
+    const [alertModalDescription, setAlertModalDescription] = useState<string>('');
     const router = useRouter();
 
     useEffect(() => {
@@ -40,12 +41,12 @@ export default function FacilityPage() {
                 if (params.value) {
                     return <div className="p-[5px] text-center">
                         <div className="h-11 w-11 relative m-auto">
-                        <Image
-                            src={params.value}
-                            fill
-                            alt="facility icon"
-                        />
-                    </div>
+                            <Image
+                                src={params.value}
+                                fill
+                                alt="facility icon"
+                            />
+                        </div>
                     </div>;
                 }
                 return <div></div>
@@ -85,28 +86,37 @@ export default function FacilityPage() {
             </div>
             <CreateEditFacilityModal createdUpdatedFacility={() => handleNewFacilityCreation()} toggleModal={setCreateFacilityModalOpen} open={createFacilityModalOpen} facilityModel={selectedFacility} id={"create-facility-modal-id"} title={"Add Facility"} description="Fill in the form below to create a new facility. The * indicates that the field is required" isCreate={true}></CreateEditFacilityModal>
             <CreateEditFacilityModal createdUpdatedFacility={() => handleFacilityUpdate()} toggleModal={setEditFacilityModalOpen} open={editFacilityModalOpen} facilityModel={selectedFacility} id={"edit-facility-modal-id"} title={"Update Facility"} description="Fill in the form below to update facility. The * indicates that the field is required" isCreate={false}></CreateEditFacilityModal>
-            <MessageModal toggleModal={setMessageModalOpen} open={messageModalOpen} title={messageModalTitle} description={messageModalDescription}></MessageModal>
+            <MessageModal confirmClick={undefined} toggleModal={setAlertModalOpen} open={alertModalOpen} title={alertModalTitle} description={alertModalDescription}></MessageModal>
+            <MessageModal confirmClick={handleDeleteConfirmation} open={messageModalOpen} toggleModal={setMessageModalOpen} title="Delete Facility" description="You are about to delete a facility, this action can not be reversed" ></MessageModal>
         </>
     )
 
     function handleNewFacilityCreation() {
-        setMessageModalDescription('New facility added');
-        setMessageModalTitle('Task completed');
-        setMessageModalOpen(true);
+        setAlertModalDescription('New facility added');
+        setAlertModalTitle('Task completed');
+        setAlertModalOpen(true);
         fetchAllFacilities();
     }
 
 
     function handleFacilityUpdate() {
-        setMessageModalDescription('Facility updated');
-        setMessageModalTitle('Task completed');
-        setMessageModalOpen(true);
+        setAlertModalDescription('Facility updated');
+        setAlertModalTitle('Task completed');
+        setAlertModalOpen(true);
         fetchAllFacilities();
     }
 
     function openCreateFacilityModal() {
         setSelectedFacility(undefined);
         setCreateFacilityModalOpen(true);
+    }
+
+    async function handleDeleteConfirmation() {
+        if (selectedFacility) {
+            setFetchingFacilities(true);
+            await deleteFacility(selectedFacility.id);
+            fetchAllFacilities();
+        }
     }
 
     async function handleDeleteUpdateClick(rowId: string, type: string) {
@@ -118,11 +128,7 @@ export default function FacilityPage() {
                 break;
             }
             case "delete": {
-                if (_selectedFacility) {
-                    setFetchingFacilities(true);
-                    await deleteFacility(_selectedFacility.id);
-                    fetchAllFacilities();
-                }
+                setMessageModalOpen(true);
                 break;
             }
         }
