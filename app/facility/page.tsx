@@ -62,7 +62,7 @@ export default function FacilityPage() {
 
     return (
         <>
-            <div className=" px-11 py-16 h-screen overflow-y-auto ">
+            <div className=" px-11 py-16  overflow-y-auto ">
                 <div
                     id="facilityHeader"
                     className="px-2 text-4xl font-bold text-black"
@@ -78,7 +78,7 @@ export default function FacilityPage() {
                     </div>
                 }
                 {!fetchingFacilities &&
-                    <div className="overflow-x-auto w-[calc(100%)]">
+                    <div className="overflow-x-auto !w-[calc(100%)]">
                         <MaterialDataGrid columnDefs={columns} data={facilities} rowClick={(rowId: number) => handleRowClick(rowId)}></MaterialDataGrid>
                     </div>
                 }

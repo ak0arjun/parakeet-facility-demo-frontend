@@ -16,6 +16,7 @@ export enum SIDEBAR_ACTION_TYPE {
 export function SidebarComponent() {
     const router = useRouter();
     let currentPathName = usePathname();
+    router.prefetch("/facility");
 
     return (
         <>
