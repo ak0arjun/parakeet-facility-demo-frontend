@@ -122,14 +122,12 @@ export default function FacilityPage() {
     async function handleDeleteUpdateClick(rowId: string, type: string) {
         const _selectedFacility = facilities.find((facility: FacilityModel) => facility.id.toString() == rowId.toString().trim());
         setSelectedFacility(_selectedFacility);
-        console.log(type);
         switch (type) {
             case "update": {
                 setEditFacilityModalOpen(true);
                 break;
             }
             case "delete": {
-                console.log(type);
                 setMessageModalOpen(true);
                 break;
             }
