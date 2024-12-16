@@ -12,14 +12,14 @@ export default function ThreeDotMenu(threeDotMenuConfig: ThreeDotMenuConfig) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClose = (type: string) => {
-        setAnchorEl(null);
         threeDotMenuConfig.onClick(threeDotMenuConfig.id, type);
+        setAnchorEl(null);
     };
 
     return (
         <div>
             <div
-                className=" p-2 h-11 w-6 relative "
+                className=" p-2 h-11 w-6 relative cursor-pointer "
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
                 aria-haspopup="true"
