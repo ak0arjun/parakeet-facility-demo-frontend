@@ -32,6 +32,9 @@ export async function updateFacility(id: number, name: string | undefined, type:
 
     try {
         const formData = new FormData();
+        if (!name && !type && !city && !state && !uploadFile && !phone && !address && !zipCode) {
+            return 'No changes detected';
+        }
         if (name) {
             formData.append('name', name);
         }

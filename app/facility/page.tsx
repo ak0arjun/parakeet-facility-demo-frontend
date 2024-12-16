@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 export default function FacilityPage() {
 
-    const [selectedFacility, setSelectedFacility] = useState<FacilityModel>();
+    const [selectedFacility, setSelectedFacility] = useState<FacilityModel | undefined>();
     const [createFacilityModalOpen, setCreateFacilityModalOpen] = useState<boolean>(false);
     const [editFacilityModalOpen, setEditFacilityModalOpen] = useState<boolean>(false);
     const [messageModalOpen, setMessageModalOpen] = useState<boolean>(false);
@@ -105,6 +105,7 @@ export default function FacilityPage() {
     }
 
     function openCreateFacilityModal() {
+        setSelectedFacility(undefined);
         setCreateFacilityModalOpen(true);
     }
 
