@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export enum SIDEBAR_ACTION_TYPE {
     FACILITY = "facility",
@@ -16,8 +17,11 @@ export enum SIDEBAR_ACTION_TYPE {
 export function SidebarComponent() {
     const router = useRouter();
     let currentPathName = usePathname();
-    router.prefetch("/facility");
-
+    
+    useEffect(() => {
+        router.prefetch("/facility");
+      }, []);
+      
     return (
         <>
             <div className="px-6 py-4 bg-foreground h-full relative w-[20rem] cursor-pointer">
