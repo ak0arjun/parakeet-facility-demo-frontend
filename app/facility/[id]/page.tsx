@@ -11,11 +11,10 @@ import Divider from '@mui/material/Divider';
 export default function FacilityDetailPage() {
     const params = useParams();
     const facilityId = params["id"] as string;
-    const [isLoading, setIsLoading] = useState<boolean>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [facilityDetail, setFacilityDetail] = useState<FacilityModel>();
 
     useEffect(() => {
-        setIsLoading(true);
         getFacilityDetail();
     }, []);
 
